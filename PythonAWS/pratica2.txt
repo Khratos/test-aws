@@ -1,0 +1,7 @@
+% python
+Python 2.7.1 (r271:86882M, Nov 30 2010, 10:35:34)
+[GCC 4.2.1 (Apple Inc. build 5664)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import boto
+>>> ec2 = boto.connect_ec2(aws_access_key_id='my_access_key',
+aws_secret_access_key='my_secret_key')
