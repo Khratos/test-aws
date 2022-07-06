@@ -18,6 +18,7 @@ sns.subscribe(topic_arn, 'email', 'suemail@email.org')
     u'ResponseMetadata': {u'RequestId': u'd4a846fd-da0e-11e0-bcf1-37db33647dea'}}
 } 
 
+#TEST
  
  #Creating a CloudWatch Alarm
 # import boto3
