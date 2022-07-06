@@ -1,43 +1,37 @@
-#Configuring SNS for CloudWatch Alarms
-import boto
-sns = boto.connect_sns()
-sns.create_topic('paws_cloudwatch')
-{
-    u'CreateTopicResponse': {u'ResponseMetadata': {u'RequestId': u'73721b87da0e-11e0-99a4-59769425d805'},
-    u'CreateTopicResult': {u'TopicArn': 
-    u'arn:aws:sns:useast-1:084307701560:paws_cloudwatch'}}
-}
-topic_arn = _['CreateTopicResponse']['CreateTopicResult']['TopicArn']
 
-topic_arn 
-u'arn:aws:sns:us-east-1:084307701560:paws_cloudwatch'
 
-sns.subscribe(topic_arn, 'email', 'suemail@email.org')
-{
-    u'SubscribeResponse':{u'SubscribeResult': {u'SubscriptionArn': u'pending confirmation'},
-    u'ResponseMetadata': {u'RequestId': u'd4a846fd-da0e-11e0-bcf1-37db33647dea'}}
-} 
-
-#TEST
  
- #Creating a CloudWatch Alarm
-# import boto3
-# cw = boto3.connect_cloudwatch()
-# my_metrics = cw.list_metrics(dimensions={'InstanceId':'i-76894c16'})
-# my_metrics[
-#     Metric:DiskReadOps, Metric:NetworkOut, Metric:NetworkIn, Metric:DiskReadBytes,
-#     Metric:CPUUtilization, Metric:DiskWriteBytes, Metric:DiskWriteOps]
-# metric = my_metrics[4]
-# metric
-# Metric:CPUUtilization
-# alarm = metric.create_alarm(name='CPUAlarm', comparison='>', threshold=80.0, 
-# period=60,
-# evaluation_periods=2, statistic='Average',
-# alarm_actions=['arn:aws:sns:us-east-1:084307701560:paws_cloudwatch'],
-# ok_actions=['arn:aws:sns:us-east-1:084307701560:paws_cloudwatch'])
-# alarm
-# MetricAlarm:CPUAlarm[CPUUtilization(Average) GreaterThanThreshold 80.0]
-# alarm.set_state('ALARM', 'Testing my alarm', '100')
-# True
 
-# alarm.describe_history()
+
+ #A Simple User-Data Script
+ >>> from ec2_launch_instance import launch_instance
+ >>> script = """#!/bin/sh
+ ... echo "Hello World. The time is now $(date -R)!" | tee /root/output.txt
+ ... """
+ >>> instance, cmdshell = launch_instance(user_data=script)
+ Security Group: paws already authorized
+ waiting for instance
+ .
+ .
+ .
+  done
+ SSH Connection refused, will retry in 5 seconds
+ >>> cmdshell.shell()
+ __| __|_ )
+ _| ( / Amazon Linux AMI
+ ___|\___|___|
+ See /usr/share/doc/system-release/ for latest release notes.
+ No packages needed for security; 1 packages available
+ [ec2-user@domU-12-31-39-00-E4-53 ~]# sudo su
+ [ec2-user@domU-12-31-39-00-E4-53 ~]# cd /root
+ [ec2-user@domU-12-31-39-00-E4-53 ~]# ls
+ output.txt
+ [ec2-user@domU-12-31-39-00-E4-53 ~]# cat output.txt
+ Hello World. The time is now Wed, 21 Sep 2011 23:53:51 +0000!
+ [ec2-user@domU-12-31-39-00-E4-53 ~]# exit
+ [ec2-user@domU-12-31-39-00-E4-53 ~]$ logout
+ *** EOF
+ >>> instance.terminate()
+ >>>
+ 
+ 
