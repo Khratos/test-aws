@@ -1,6 +1,6 @@
 #Configuring SNS for CloudWatch Alarms
-import boto3
-sns = boto3.connect_sns()
+import boto
+sns = boto.connect_sns()
 sns.create_topic('paws_cloudwatch')
 {
     u'CreateTopicResponse': {u'ResponseMetadata': {u'RequestId': u'73721b87da0e-11e0-99a4-59769425d805'},
