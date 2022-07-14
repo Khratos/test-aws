@@ -1,0 +1,29 @@
+Snapshot an EBS Volume
+>>> import boto
+>>> ec2 = boto.connect_ec2()     
+>>> reservations = ec2.get_all_instances(filters={'paws' : None})
+>>> instance = reservations[0].instances[0] 
+>>> volumes = ec2.get_all_volumes(filters={'attachment.instance-id' : instance.id})
+>>> volumes
+[Volume:vol-990e5af3, Volume:vol-bdf7a2d7] 
+>>> for v in volumes:
+....:   print v.attach_data.device
+....:
+/dev/sdh 
+/dev/sda1
+>>> snaps = [v.create_snapshot() for v in volumes] 
+>>> snaps
+[Snapshot:snap-42a60b21, Snapshot:snap-40a60b23]
+>>>
+
+
+Restoring an EBS Volume
+>>> import boto
+>>> ec2 = boto.connect_ec2()
+>>> volume_id = 'vol-bdf7a2d7' # The failing EBS volume
+>>> bad_volume = ec2.get_all_volumes([volume_id])[0]
+>>> snaps = bad_volume.snapshots() 
+>>> snaps.sort(key=lambda snap: snap.start_time) 
+2.9  Restore a Volume from a Snapshot | 23
+>>> latest_snap = snaps[-1] 
+>>> new_volume = ec2.create_volume(bad_volume.size, bad_volume.zone, latest_snap) 
