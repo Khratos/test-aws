@@ -22,6 +22,7 @@ ssh_passwd=None):
     ec2 = boto.connect_ec2()
   
     try:
+        print(f"keypairs",key_name )
         key = ec2.get_all_key_pairs(keynames=[key_name])[0]
     except ec2.ResponseError as e:
         if e.code == 'InvalidKeyPair.NotFound':
