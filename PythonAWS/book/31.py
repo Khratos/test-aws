@@ -5,10 +5,10 @@ def create_bucket(bucket_name):
 
     bucket = s3.lookup(bucket_name)
     if bucket:
-        print ('Bucket (%s) already exists' % bucket_name)
+        print (f'Bucket (%s) already exists', bucket_name)
     else:
         try:
             bucket = s3.create_bucket(bucket_name)
         except s3.provider.storage_create_error as e:
-            print ('Bucket (%s) is owned by another user' % bucket_name)
+            print (f'Bucket (%s) is owned by another user'.bucket_name)
     return bucket
