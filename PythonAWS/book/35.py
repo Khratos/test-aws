@@ -8,5 +8,5 @@ def bucket_du(bucket_name):
         for key in bucket:
             total_bytes += key.size
     else:
-        print('Warning: bucket %s was not found!' % bucket_name)
+        print(f'Warning: bucket %s was not found!', bucket_name)
     return total_bytes
