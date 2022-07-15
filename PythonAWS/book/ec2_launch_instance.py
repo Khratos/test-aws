@@ -68,8 +68,10 @@ ssh_passwd=None):
     instance.add_tag(tag)
  
     if cmd_shell:
-        key_path = os.path.join(os.path.expanduser(key_dir),
-        key_name+key_extension)
+        print(key_dir)
+        print(key_name)
+        print(key_extension)
+        key_path = os.path.join(os.path.expanduser(key_dir),key_name+key_extension)
         cmd = boto.manage.cmdshell.sshclient_from_instance(instance,
         key_path,
         user_name=login_user)
